@@ -6,9 +6,9 @@
 
 ## Gradle
 .gradle/
-gradle/
-gradlew
-gradlew.bat
+/gradle/
+./gradlew
+./gradlew.bat
 
 ## Package Files #
 *.jar
