@@ -3,6 +3,7 @@ package com.teamtreehouse.giflib.dao;
 import com.teamtreehouse.giflib.model.Category;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -34,7 +35,11 @@ public class CategoryDaoImpl implements CategoryDao {
 
     @Override
     public void save(Category category) {
-
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(category);
+        session.getTransaction().commit();
+        session.close();
     }
 
     @Override
