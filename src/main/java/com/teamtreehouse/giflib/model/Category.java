@@ -13,12 +13,12 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Size(min = 3, max = 12)
+    @NotNull(message = "valuerequired")
+    @Size(min = 3, max = 12, message = "{category.name.size}")
     private String name;
 
-    @NotNull
-    @Pattern(regexp = "#[0-9a-fA-F]{6}")
+    @NotNull(message = "{valuerequired}")
+    @Pattern(regexp = "#[0-9a-fA-F]{6}", message = "{category.colorcode.format}")
     private String colorCode;
 
     @OneToMany(mappedBy = "category")

@@ -3,6 +3,7 @@ package com.teamtreehouse.giflib.web.controller;
 import com.teamtreehouse.giflib.model.Category;
 import com.teamtreehouse.giflib.service.CategoryService;
 import com.teamtreehouse.giflib.web.Color;
+import com.teamtreehouse.giflib.web.FlashMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -70,6 +71,9 @@ public class CategoryController {
     @RequestMapping(value = "/categories", method = RequestMethod.POST)
     public String addCategory(@Valid Category category, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
+            // Attach the binding result as a flash attribute
+            // This will be used to attach any errors to the form after the redirect
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.category", bindingResult);
             // Rebind data so entered form data isn't lost
             // Redirect attributes is used so the category survives a redirect
             redirectAttributes.addFlashAttribute("category", category);
@@ -77,6 +81,9 @@ public class CategoryController {
             return "redirect:categories/add";
         }
         categoryService.save(category);
+
+        redirectAttributes.addFlashAttribute("flash", new FlashMessage("Category successfully added!", FlashMessage.Status.SUCCESS));
+
         return "redirect:/categories";
     }
 
